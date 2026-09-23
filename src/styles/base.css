@@ -1,0 +1,238 @@
+/* ------------------------------------------------------------------
+   Design tokens
+   Black from the logo background, neon from the logo mark (#e0e324),
+   gold as the fine-detail accent, bone for text.
+------------------------------------------------------------------- */
+:root {
+  --black: #000000;
+  --graphite: #131313;
+  --graphite-2: #1d1d1c;
+  --bone: #f2f1ea;
+  --ash: #a3a39c;
+  --line: rgba(242, 241, 234, 0.16);
+
+  --neon: #e0e324;
+  --gold: #c8a24c;
+  --gold-hi: #ecd48a;
+  --gold-lo: #9c7a2c;
+  --gold-line: linear-gradient(90deg, var(--gold-lo), var(--gold-hi) 50%, var(--gold-lo));
+  --danger: #ff7a66;
+
+  --font-display: 'Archivo Variable', 'Archivo', 'Arial Black', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+
+  --header-h: 72px;
+  --gutter: clamp(20px, 4.5vw, 72px);
+  --maxw: 1600px;
+  --slant: 7.3deg; /* the lean of the stem of the logo */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (min-width: 1100px) {
+  :root { --header-h: 88px; }
+}
+
+/* ------------------------------------------------------------------
+   Reset
+------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--black);
+  color: var(--bone);
+  font-family: var(--font-display);
+  font-stretch: 100%;
+  font-weight: 400;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, video, svg { display: block; max-width: 100%; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+p { margin: 0 0 1em; }
+a { color: inherit; }
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: 0.6; }
+dl, dd, figure, blockquote { margin: 0; }
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+:focus-visible { outline: 2px solid var(--neon); outline-offset: 3px; }
+
+::selection { background: var(--neon); color: #000; }
+
+.skip-link {
+  position: fixed;
+  left: 12px;
+  top: -60px;
+  z-index: 200;
+  padding: 0.7rem 1rem;
+  background: var(--neon);
+  color: #000;
+  font-weight: 700;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+.skip-link:focus { top: 12px; }
+
+/* ------------------------------------------------------------------
+   Layout helpers
+------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.container--wide { max-width: 1680px; }
+
+.section { padding-block: clamp(56px, 7.5vw, 112px); }
+.section--tight { padding-block: clamp(40px, 6vw, 80px); }
+.section--flush-top { padding-top: 0; }
+
+/* ------------------------------------------------------------------
+   The slash - the brand's one recurring shape
+------------------------------------------------------------------- */
+.slash {
+  display: inline-block;
+  flex: none;
+  width: 0.3em;
+  height: 0.85em;
+  margin-right: 0.55em;
+  background: var(--neon);
+  transform: skewX(var(--slant));
+}
+.slash--lg { width: 0.26em; height: 0.9em; margin-right: 0.45em; }
+
+/* ------------------------------------------------------------------
+   Buttons and links
+------------------------------------------------------------------- */
+.btn {
+  --cut: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.05rem calc(2rem + var(--cut) / 2);
+  border: 0;
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  font-weight: 700;
+  font-size: 0.98rem;
+  line-height: 1;
+  text-decoration: none;
+  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% 100%, var(--cut) 100%);
+  transition: background-color 0.2s, color 0.2s;
+}
+.btn--primary { background: var(--neon); color: #000; }
+.btn--primary:hover { background: var(--gold-hi); }
+.btn--ghost { background: rgba(242, 241, 234, 0.14); color: var(--bone); backdrop-filter: blur(6px); }
+.btn--ghost:hover { background: var(--bone); color: #000; }
+/* clip-path hides outlines, so keyboard focus is shown by inverting the button */
+.btn:focus-visible { outline: none; background: var(--bone); color: #000; text-decoration: underline; text-underline-offset: 5px; }
+
+.link-underline {
+  display: inline-block;
+  padding-bottom: 4px;
+  font-weight: 600;
+  font-stretch: 110%;
+  text-decoration: none;
+  background: linear-gradient(var(--neon), var(--neon)) 0 100% / 100% 2px no-repeat;
+  transition: color 0.2s, background-size 0.25s var(--ease);
+}
+.link-underline:hover { color: var(--neon); background-size: 100% 1px; }
+
+/* ------------------------------------------------------------------
+   Section headings
+------------------------------------------------------------------- */
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-bottom: clamp(28px, 4vw, 56px);
+}
+.section-head__title {
+  display: flex;
+  align-items: center;
+  font-size: clamp(1.9rem, 4vw, 3.2rem);
+}
+.section-head__text { margin: 0.9rem 0 0; max-width: 52ch; color: var(--ash); }
+
+/* ------------------------------------------------------------------
+   Loading, empty and error states
+------------------------------------------------------------------- */
+.skeleton {
+  background: linear-gradient(100deg, #151515 30%, #222221 50%, #151515 70%) 0 0 / 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+.skeleton--line { display: block; height: 0.9rem; width: 40%; margin-top: 0.7rem; }
+.skeleton--wide { width: 75%; }
+.skeleton--hero { height: 60vh; min-height: 340px; }
+.skeleton--tile { aspect-ratio: 3 / 2; }
+.skeleton--quote { height: 220px; }
+.skeleton--reel { aspect-ratio: 9 / 16; }
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+.status {
+  max-width: 640px;
+  padding: 1.75rem 2rem;
+  background: var(--graphite);
+  border-left: 3px solid var(--gold);
+}
+.status--error { border-left-color: var(--danger); }
+.status__title { margin: 0 0 0.4rem; font-stretch: 118%; font-weight: 700; font-size: 1.2rem; }
+.status__text { margin: 0 0 1.25rem; color: var(--ash); }
+.status > :last-child { margin-bottom: 0; }
+
+/* ------------------------------------------------------------------
+   Forms
+------------------------------------------------------------------- */
+.form { display: grid; gap: 1.4rem; justify-items: start; }
+.field { width: 100%; }
+.field label { display: block; margin-bottom: 0.45rem; font-weight: 600; font-stretch: 108%; font-size: 0.95rem; }
+.field input,
+.field textarea,
+.field select {
+  display: block;
+  width: 100%;
+  padding: 0.9rem 1rem;
+  background: var(--graphite);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  color: var(--bone);
+}
+.field textarea { resize: vertical; min-height: 9rem; }
+.field input:focus,
+.field textarea:focus,
+.field select:focus { outline: 2px solid var(--neon); outline-offset: 0; border-color: var(--neon); }
+.field-row { display: grid; gap: 1.4rem; width: 100%; }
+@media (min-width: 640px) { .field-row { grid-template-columns: 1fr 1fr; } }
+.form__note { margin: 0; padding: 0.9rem 1.1rem; background: var(--graphite); border-left: 3px solid var(--gold); }
+.form__note--error { border-left-color: var(--danger); }
+
+/* ------------------------------------------------------------------
+   Motion preferences
+------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
