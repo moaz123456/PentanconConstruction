@@ -11,8 +11,8 @@ export const site = {
 
   // Leave a value empty to hide it. Fill these in when you have the real details.
   contact: {
-    email: 'Shsaad@pentanconeg.com',
-    phone: '',
+    email: 'info@pentacon.com',
+    phone: '01101202340',
     whatsapp: '01101330005',
     address: ''
   },

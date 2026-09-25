@@ -1,7 +1,10 @@
 import { clearSession, getToken } from '../utils/auth';
 
-// Base URL of the API. Empty in development (Vite proxies /api and /uploads), set in .env.production.
-const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/+$/, '');
+// Base URL of the API. Empty in development (Vite proxies /api and /uploads), set via
+// .env.production / VERCEL env VITE_API_BASE_URL. Fall back to the live API on any production
+// build so a relative /api request can never be sent to the static host.
+const LIVE_API = 'https://pentacon-construction.runasp.net';
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || (import.meta.env.PROD ? LIVE_API : '')).replace(/\/+$/, '');
 
 export class ApiError extends Error {
   constructor(message, status) {

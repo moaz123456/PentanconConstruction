@@ -121,8 +121,6 @@ export default function Header() {
           </ul>
         </nav>
 
-        <SocialLinks className="site-header__social" />
-
         <button
           className="menu-button"
           type="button"
