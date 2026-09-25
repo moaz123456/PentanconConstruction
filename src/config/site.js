@@ -13,7 +13,7 @@ export const site = {
   contact: {
     email: 'info@pentacon.com',
     phone: '01101202340',
-    whatsapp: '01101330005',
+    whatsapp: '01101202340',
     address: ''
   },
 
